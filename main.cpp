@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include "ArrayReader.h"
 #include "ArraySort.h"
@@ -59,48 +60,71 @@ void outFile(int* array, int size, std::string file_name)
 }
 
 
-
-int main()
+int main(int argc, char *argv[])
 {
-    
-    int key;
-    
-    std::string file_name;
-    std::string str_array;
 
-    
-    cout << "Nome do Arquivo .txt (sem extensão): " << endl;
-    cin >> file_name;
-    cout << "1 - Shell Sort, 2 - Selection Sort: " << endl;
-    cin >> key;
+    std::vector<std::string> args(argv, argv + argc);
 
-    str_array = getMemorieString(file_name);
+    if (args[1] == "--help" || args[2] == "--help")
+    {
+        cout << "usage: ./main file [options]" << endl
+             << "options:" << endl
+             << "--shell-sort \t Shell sort a file" << endl
+             << "--selection-sort \t Selection sort a file" << endl
+             << "--quick-sort \t Quick sort a file" << endl
+             << "--merge-sort \t Merge sort a file" << endl
+             << "--radix-sort \t Radix sort a file" << endl;
 
+        return 0;
+    }
+
+    std::string file_name = args[1].substr(0, args[1].size() - 4);
+    std::string str_array = getMemorieString(file_name);
 
     ArrayReader reader(str_array);
     ArraySort sorter(reader.getArray(), reader.getSize());
 
-
-    if(key == 1)
-    {   
+    if(args[2] == "--shell-sort")
+    {
         file_name.insert(file_name.size(), "_shellSort");
-
         sorter.shellSort();
         outFile(sorter.getArray(), sorter.getSize(), file_name);
-        // sorter.printArray();
         cout << endl << file_name << " criado com sucesso." << endl;
     }
-    else if (key == 2)
+    if(args[2] == "--selection-sort")
     {
         file_name.insert(file_name.size(), "_selectionSort");
-
         sorter.selectionSort();
         outFile(sorter.getArray(), sorter.getSize(), file_name);
         cout << endl << file_name << " criado com sucesso." << endl;
-        
-        // sorter.printArray();
     }
-
+    if (args[2] == "--quick-sort")
+    {
+        file_name.insert(file_name.size(), "_quickSort");
+        sorter.quickSort();
+        outFile(sorter.getArray(), sorter.getSize(), file_name);
+        cout << endl << file_name << " criado com sucesso." << endl;
+    }
+    if (args[2] == "--merge-sort")
+    {
+        file_name.insert(file_name.size(), "_mergeSort");
+        sorter.mergeSort();
+        outFile(sorter.getArray(), sorter.getSize(), file_name);
+        cout << endl
+             << file_name << " criado com sucesso." << endl;
+    }
+    if (args[2] == "--radix-sort")
+    {
+        file_name.insert(file_name.size(), "_radixSort");
+        sorter.radixSort();
+        outFile(sorter.getArray(), sorter.getSize(), file_name);
+        cout << endl
+             << file_name << " criado com sucesso." << endl;
+    }
+    // else{
+    //     cout << "error: unsuported parameter\n use: --help" << endl;
+    //     return 1;
+    // }
 
     return 0;
 }
