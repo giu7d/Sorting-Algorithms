@@ -69,13 +69,17 @@ int main(int argc, char *argv[])
     {
         cout << "usage: ./main file [options]" << endl
              << "options:" << endl
-             << "--shell-sort \t Shell sort a file" << endl
+             << "--shell-sort     \t Shell sort a file" << endl
              << "--selection-sort \t Selection sort a file" << endl
-             << "--quick-sort \t Quick sort a file" << endl
-             << "--merge-sort \t Merge sort a file" << endl
-             << "--radix-sort \t Radix sort a file" << endl;
+             << "--quick-sort     \t Quick sort a file" << endl
+             << "--merge-sort     \t Merge sort a file" << endl
+             << "--radix-sort     \t Radix sort a file" << endl;
 
         return 0;
+    }
+    else if (argc != 3){
+        cout << "error: unsuported parameter\n use: --help" << endl;
+        return 1;
     }
 
     std::string file_name = args[1].substr(0, args[1].size() - 4);
@@ -121,10 +125,7 @@ int main(int argc, char *argv[])
         cout << endl
              << file_name << " criado com sucesso." << endl;
     }
-    // else{
-    //     cout << "error: unsuported parameter\n use: --help" << endl;
-    //     return 1;
-    // }
+    
 
     return 0;
 }
