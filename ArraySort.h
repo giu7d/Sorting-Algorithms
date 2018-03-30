@@ -6,12 +6,15 @@ class ArraySort
   private:
     int* array;
     int size;
-    void swap(int *arrayX, int *arrayY);
-    void merge(int *a, int *l, int nL, int *r, int nR);
+    
     void quickFunc(int *arr, int low, int high);
+    void merge(int *a, int *l, int nL, int *r, int nR);
     void mergeFunc(int *a, int s);
+    void heap(int *a, int n);
+    void heapFunc(int *a, int i, int n);
+    void swap(int *aX, int *aY);
 
-  public: 
+  public:  
     ArraySort(int *a, int s);
     ~ArraySort();
   
@@ -20,6 +23,7 @@ class ArraySort
     void quickSort();
     void mergeSort();
     void radixSort();
+    void heapSort();
     
     void reverseArray();
     void printArray();

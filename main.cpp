@@ -1,5 +1,14 @@
-// g++ (Ubuntu 5.4.0-6ubuntu1~16.04.5) 5.4.0 20160609
-// -std=c++11 - parametro p/ compilar.
+//
+//
+//  Giuseppe Antonio Setem Davanzo
+//
+//  >> g++ --std=c++17 main.cpp ArrayReader.cpp ArraySort.cpp -o main
+//
+//  OS: Ubuntu 5.4.0-6ubuntu1~16.04.5
+//  Compilador: g++ 5.4.0 20160609
+//  Std: C++ 17
+//
+//
 
 #include <iostream>
 #include <fstream>
@@ -63,6 +72,12 @@ void outFile(int* array, int size, std::string file_name)
 int main(int argc, char *argv[])
 {
 
+    if (argc <= 1)
+    {
+        cout << "error: unsuported parameter\nuse: --help" << endl;
+        return 1;
+    }
+
     std::vector<std::string> args(argv, argv + argc);
 
     if (args[1] == "--help" || args[2] == "--help")
@@ -73,12 +88,14 @@ int main(int argc, char *argv[])
              << "--selection-sort \t Selection sort a file" << endl
              << "--quick-sort     \t Quick sort a file" << endl
              << "--merge-sort     \t Merge sort a file" << endl
-             << "--radix-sort     \t Radix sort a file" << endl;
+             << "--radix-sort     \t Radix sort a file" << endl
+             << "--heap-sort      \t Heap sort a file" << endl;
 
         return 0;
     }
-    else if (argc != 3){
-        cout << "error: unsuported parameter\n use: --help" << endl;
+    else if (argc != 3)
+    {
+        cout << "error: unsuported parameter\nuse: --help" << endl;
         return 1;
     }
 
@@ -87,6 +104,7 @@ int main(int argc, char *argv[])
 
     ArrayReader reader(str_array);
     ArraySort sorter(reader.getArray(), reader.getSize());
+
 
     if(args[2] == "--shell-sort")
     {
@@ -125,7 +143,14 @@ int main(int argc, char *argv[])
         cout << endl
              << file_name << " criado com sucesso." << endl;
     }
-    
+    if (args[2] == "--heap-sort")
+    {
+        file_name.insert(file_name.size(), "_heapSort");
+        sorter.heapSort();
+        outFile(sorter.getArray(), sorter.getSize(), file_name);
+        cout << endl
+             << file_name << " criado com sucesso." << endl;
+    }
 
     return 0;
 }

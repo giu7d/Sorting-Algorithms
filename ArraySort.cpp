@@ -15,6 +15,58 @@ ArraySort::~ArraySort()
     delete[] array;
 }
 
+
+//Public Sort Methods
+
+void ArraySort::shellSort()
+{
+    int tmp, gap, i, j;
+
+    for (gap = (size / 2); gap > 0; gap /= 2)
+    {
+        for (i = gap; i < size; i += 1)
+        {
+            tmp = array[i];
+
+            for (j = i; j >= gap && array[j - gap] > tmp; j -= gap)
+            {
+                array[j] = array[j - gap];
+            }
+
+            array[j] = tmp;
+        }
+    }
+}
+
+void ArraySort::selectionSort()
+{
+    int i, j, min;
+
+    for (i = 0; i < (size - 1); i++)
+    {
+        min = i;
+        for (j = (i + 1); j < size; j++)
+        {
+            if (array[j] < array[min])
+            {
+                min = j;
+            }
+        }
+
+        swap(&array[min], &array[i]);
+    }
+}
+
+void ArraySort::quickSort()
+{
+    quickFunc(array, 0, size - 1);
+}
+
+void ArraySort::mergeSort()
+{
+    mergeFunc(array, size);
+}
+
 void ArraySort::radixSort()
 {
     int i;
@@ -61,10 +113,13 @@ void ArraySort::radixSort()
     delete[] tmp;
 }
 
-void ArraySort::mergeSort()
+void ArraySort::heapSort()
 {
-    mergeFunc(array, size);
+    heap(array, size);
 }
+
+
+//Private Sort Methods
 
 void ArraySort::merge(int *a, int *l, int nL, int *r, int nR)
 {
@@ -105,12 +160,6 @@ void ArraySort::mergeFunc(int *a, int s)
     merge(a, left, mid, right, s - mid);
 }
 
-void ArraySort::quickSort()
-{
-    int n = size - 1;
-    quickFunc(array, 0, n);
-}
-
 void ArraySort::quickFunc(int *arr, int low, int high)
 {
     int i = low;
@@ -139,50 +188,46 @@ void ArraySort::quickFunc(int *arr, int low, int high)
         quickFunc(arr, i, high);
 }
 
-void ArraySort::shellSort()
+void ArraySort::swap(int *aX, int *aY)
 {
-    int tmp, gap, i, j;
+    int tmp = *aX;
+    *aX = *aY;
+    *aY = tmp;
+}
 
-    for (gap = (size / 2); gap > 0; gap /= 2)
+void ArraySort::heap(int *a, int n)
+{
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapFunc(a, n, i);
+
+    for (int i = n - 1; i >= 0; i--)
     {
-        for (i = gap; i < size; i += 1)
-        {
-            tmp = array[i];
-
-            for (j = i; j >= gap && array[j - gap] > tmp; j -= gap)
-            {
-                array[j] = array[j - gap];
-            }
-
-            array[j] = tmp;    
-        }
+        swap(&a[0], &a[i]);
+        heapFunc(a, i, 0);
     }
 }
 
-void ArraySort::selectionSort()
+void ArraySort::heapFunc(int *a, int n, int i)
 {
-    int i, j, min;
+    int root = i;
+    int l = 2*i + 1;
+    int r = 2*i + 2;
 
-    for (i = 0; i < (size - 1); i++)
+    if (l < n && a[l] > a[root])
+        root = l;
+
+    if (r < n && a[r] > a[root])
+        root = r;
+
+    if (root != i)
     {
-        min = i;
-        for (j = (i + 1); j < size; j++)
-        {
-            if (array[j] < array[min]){
-                min = j;
-            }
-        }
-        
-        swap(&array[min], &array[i]);
+        swap(&a[i], &a[root]);
+        heapFunc(a, n, root);
     }
 }
 
-void ArraySort::swap(int *arrayX, int *arrayY)
-{
-    int tmp = *arrayX;
-    *arrayX = *arrayY;
-    *arrayY = tmp;
-}
+
+//Other Class Methods
 
 void ArraySort::reverseArray()
 {
