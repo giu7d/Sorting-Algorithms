@@ -12,7 +12,7 @@ class ArrayReader
     std::string mem_str;
 
     int memoryStrSize(std::string str);
-    int *getMemorieArray(std::string str, int s);
+    void setMemToArray(std::string str);
 
   public:
     ArrayReader(std::string str);

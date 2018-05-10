@@ -103,8 +103,9 @@ int main(int argc, char *argv[])
     std::string str_array = getMemorieString(file_name);
 
     ArrayReader reader(str_array);
+    cout << "Object: Array Reader READY!" << endl;
     ArraySort sorter(reader.getArray(), reader.getSize());
-
+    cout << "Object: Array Sorter READY!" << endl;
 
     if(args[2] == "--shell-sort")
     {

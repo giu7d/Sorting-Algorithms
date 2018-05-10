@@ -7,6 +7,7 @@ ArraySort::ArraySort(int *a, int s)
 {
     size = s;
     array = new int[size];
+    cout << "array: " << &array << " at ArraySort::ArraySort " << endl;
     array = a;
 }
 
